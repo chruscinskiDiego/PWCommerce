@@ -1,5 +1,6 @@
 package br.edu.utfpr.pb.pw25s.server;
 
+import br.edu.utfpr.pb.pw25s.server.error.ApiError;
 import br.edu.utfpr.pb.pw25s.server.model.User;
 import br.edu.utfpr.pb.pw25s.server.repository.UserRepository;
 import br.edu.utfpr.pb.pw25s.server.shared.GenericResponse;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.StatusResultMatchersExtensionsKt.isEqualTo;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
@@ -156,7 +158,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void postUser_whenUserHasPasswordAllLowecase_receiveBadRequest(){
+    public void postUser_whenUserHasPasswordAllLowercase_receiveBadRequest(){
 
         User user = createValidUser();
 
@@ -166,6 +168,24 @@ public class UserControllerTest {
                 testRestTemplate.postForEntity(API_USERS, user, Object.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+
+    }
+
+    @Test
+    public void postUser_whenUserIsInvalid_receiveApiError(){
+        ResponseEntity<ApiError> response =
+                testRestTemplate.postForEntity(API_USERS, new User(), ApiError.class);
+
+        assertThat(response.getBody().getUrl()).isEqualTo(API_USERS);
+    }
+
+    @Test
+    public void postUser_whenUserIsInvalid_ReceiveApiErrorWithValidationError(){
+
+        ResponseEntity<ApiError> response =
+                testRestTemplate.postForEntity(API_USERS, new User(), ApiError.class);
+
+        assertThat(response.getBody().getValidationErrors().size()).isEqualTo(3);
 
     }
 
