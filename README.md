@@ -1,35 +1,35 @@
 # PWCommerce
 
-Backend acadêmico de comércio eletrônico desenvolvido na UTFPR com Java e Spring Boot.
+Academic e-commerce backend developed at UTFPR with Java and Spring Boot.
 
-## Recursos
+## Features
 
-- Categorias e produtos.
-- Cadastro de usuários.
-- Componentes de autenticação e autorização com JWT.
-- Validação de nomes de usuário e tratamento de erros.
-- Persistência com Spring Data JPA.
+- Categories and products.
+- User registration.
+- JWT authentication and authorization components.
+- Username validation and error handling.
+- Persistence with Spring Data JPA.
 
-## Executar localmente
+## Run locally
 
-Instale o JDK definido em pom.xml e execute na raiz:
+Install the JDK specified in pom.xml and run from the repository root:
 
 ```bash
 sh mvnw spring-boot:run
 ```
 
-A configuração em src/main/resources/application.yml utiliza a porta 8025 e habilita o console H2 em /h2-console. Confira os parâmetros do banco e a configuração de segurança antes de testar as rotas.
+src/main/resources/application.yml configures port 8025 and enables the H2 console at /h2-console. Review database and security settings before testing routes.
 
-## Organização
+## Structure
 
-Controllers recebem as requisições; services implementam as operações; repositories acessam os modelos persistidos. Os componentes de segurança estão em security/.
+Controllers receive requests, services implement operations and repositories access persistent models. Security components are under security/.
 
-## Testes
+## Tests
 
 ```bash
 sh mvnw test
 ```
 
-## Contexto
+## Context
 
-Projeto de aprendizado de APIs REST, validação, autenticação e persistência. Não representa uma operação comercial.
+A learning project covering REST APIs, validation, authentication and persistence. It is not a commercial operation.
